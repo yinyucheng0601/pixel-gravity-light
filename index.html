@@ -1,202 +1,84 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pixel Gravity & Light Effect</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #1a1a1a; /* 深灰色背景 */
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-        canvas {
-            display: block;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Gravity & Light Effect</title>
+  <link rel="stylesheet" href="css/layout.css">
 </head>
 <body>
+  <canvas id="bg-layer"></canvas>
 
-<canvas id="canvas"></canvas>
+  <div class="ui-layer">
+    <header>
+      <div class="header-left">
+        <img src="assets/logo.png" alt="Logo" class="header-logo">
+        <div class="icon-btn hamburger">
+          <span></span><span></span><span></span>
+        </div>
+        <!-- Switch 紧跟在菜单 icon 后面，靠左排列 -->
+        <button class="switch-btn"><img src="assets/switch.png" alt="Switch" /></button>
+      </div>
+      <div class="header-center"></div>
+      <div class="header-right">
+        <div class="user-profile"></div>
+      </div>
+    </header>
 
-<script>
-    const canvas = document.getElementById('canvas');
-    const ctx = canvas.getContext('2d');
+    <div class="main-container">
+      <aside class="sidebar-card">
+        <div class="sidebar-header">
+          <button class="btn-new-project">+ 新建项目</button>
+        </div>
+        <div class="project-list">
+          <div class="project-item">
+            <div class="project-icon"></div>
+            <div class="project-info">
+              <div class="project-name">Neural-Flow-Backend</div>
+              <div class="project-meta"><span>Python</span><span>•</span><span>2m ago</span></div>
+            </div>
+          </div>
 
-    let width, height;
-    let particles = [];
-    let time = 0; // 用于边缘流动动画
-    const spacing = 20; // 点阵间距
-    const mouse = { x: -1000, y: -1000, active: false };
-    const lightRadius = 380; // 光照范围（扩大）
-    const gravityStrength = 0.4; // 引力强度
-    const defaultDotAlpha = 0.05; // 默认点阵透明度 #FFFFFF 5%
+          <div class="project-item">
+            <div class="project-icon"></div>
+            <div class="project-info">
+              <div class="project-name">GPT-Edge-Optimizer</div>
+              <div class="project-meta"><span>Rust</span><span>•</span><span>1h ago</span></div>
+            </div>
+          </div>
 
-    // 初始化画布
-    function init() {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-        particles = [];
+          <div class="project-item">
+            <div class="project-icon"></div>
+            <div class="project-info">
+              <div class="project-name">Diffusion-UI-Core</div>
+              <div class="project-meta"><span>TypeScript</span><span>•</span><span>Yesterday</span></div>
+            </div>
+          </div>
 
-        for (let y = 0; y < height; y += spacing) {
-            for (let x = 0; x < width; x += spacing) {
-                // 随机透明度模拟像素风的随机感
-                const alpha = Math.random() * 0.5 + 0.1;
-                particles.push({
-                    baseX: x,
-                    baseY: y,
-                    x: x,
-                    y: y,
-                    alpha: alpha
-                });
-            }
-        }
-    }
+          <div class="project-item">
+            <div class="project-icon"></div>
+            <div class="project-info">
+              <div class="project-name">Auto-Doc-Agent</div>
+              <div class="project-meta"><span>Go</span><span>•</span><span>Feb 12</span></div>
+            </div>
+          </div>
+        </div>
+      </aside>
 
-    // 鼠标移动监听
-    window.addEventListener('mousemove', (e) => {
-        mouse.x = e.clientX;
-        mouse.y = e.clientY;
-        mouse.active = true;
-    });
+      <main class="content-area">
+        <div id="intro-container" class="intro-box">
+          <div class="workspace-hero intro-hidden">
+            <h1>Code Your Dream</h1>
+          </div>
+          <div class="workspace-input-wrap search-wrapper intro-hidden">
+            <input type="text" class="workspace-input" placeholder="What's on your mind now?" />
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
 
-    window.addEventListener('resize', init);
-
-    function animate() {
-        ctx.clearRect(0, 0, width, height);
-
-        particles.forEach(p => {
-            const dx = mouse.x - p.baseX;
-            const dy = mouse.y - p.baseY;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-            
-            // 默认回归原始位置
-            let targetX = p.baseX;
-            let targetY = p.baseY;
-
-            // 引力逻辑：在一定范围内产生位移
-            if (distance < lightRadius * 1.5) {
-                const force = (lightRadius * 1.5 - distance) / (lightRadius * 1.5);
-                targetX += dx * force * gravityStrength;
-                targetY += dy * force * gravityStrength;
-            }
-
-            // 缓动平滑处理
-            p.x += (targetX - p.x) * 0.1;
-            p.y += (targetY - p.y) * 0.1;
-
-            // 光照强度计算
-            const opacity = Math.max(0, 1 - distance / lightRadius);
-
-            // 默认点阵：始终绘制 #FFFFFF 5% 透明度
-            ctx.fillStyle = `rgba(255, 255, 255, ${defaultDotAlpha})`;
-            ctx.fillRect(p.x, p.y, 2, 2);
-
-            if (opacity > 0) {
-                // 蓝紫色光照：蓝色 #00DFFF 为主，紫色为辅
-                const shift = (1 - opacity) * 5;
-
-                // 蓝色通道 #00DFFF (0, 223, 255) - 突出
-                ctx.fillStyle = `rgba(0, 223, 255, ${opacity * p.alpha * 0.95})`;
-                ctx.fillRect(p.x - shift, p.y, 2, 2);
-
-                // 紫色通道 - 点缀
-                ctx.fillStyle = `rgba(180, 100, 255, ${opacity * p.alpha * 0.5})`;
-                ctx.fillRect(p.x + shift, p.y, 2, 2);
-
-                // 主体（青蓝 #00DFFF 为主）
-                ctx.fillStyle = `rgba(0, 223, 255, ${opacity * 0.9})`;
-                ctx.fillRect(p.x, p.y, 2, 2);
-            }
-        });
-
-        // 边缘蓝紫色动态流动发光
-        drawEdgeGlow();
-
-        time += 0.015; // 稍慢，呼吸更舒缓
-        requestAnimationFrame(animate);
-    }
-
-    function drawEdgeGlow() {
-        const baseWidth = 80;
-        const widthWave = 70; // 起伏振幅
-
-        // 呼吸节奏：慢速起伏 (0.4 = ~15秒一周期)
-        const breath = Math.sin(time * 0.4) * 0.5 + 0.5;
-        // 多波流动：不同相位制造有机感
-        const flow1 = Math.sin(time * 0.9) * 0.5 + 0.5;
-        const flow2 = Math.sin(time * 1.2 + 2.1) * 0.5 + 0.5;
-        const flow3 = Math.sin(time * 0.6 + 4.2) * 0.5 + 0.5;
-
-        // 光标对边缘的响应：距离越近，该边缘"苏醒"得越强
-        const cursorZone = 400; // 光标影响范围
-        const distTop = mouse.y;
-        const distBottom = height - mouse.y;
-        const distLeft = mouse.x;
-        const distRight = width - mouse.x;
-
-        const reactTop = Math.max(0, 1 - distTop / cursorZone);
-        const reactBottom = Math.max(0, 1 - distBottom / cursorZone);
-        const reactLeft = Math.max(0, 1 - distLeft / cursorZone);
-        const reactRight = Math.max(0, 1 - distRight / cursorZone);
-
-        // 每条边独立的起伏宽度（错开相位）
-        const topWidth = baseWidth + widthWave * (0.3 + 0.7 * breath) * (0.6 + 0.4 * flow1) + reactTop * 60;
-        const bottomWidth = baseWidth + widthWave * (0.3 + 0.7 * flow2) * (0.6 + 0.4 * breath) + reactBottom * 60;
-        const leftWidth = baseWidth + widthWave * (0.3 + 0.7 * flow3) * (0.6 + 0.4 * flow1) + reactLeft * 60;
-        const rightWidth = baseWidth + widthWave * (0.3 + 0.7 * flow1) * (0.6 + 0.4 * flow2) + reactRight * 60;
-
-        const baseIntensity = 0.06;
-        // 光标靠近时强度提升，呼吸时强度脉动
-        const topIntensity = baseIntensity * (0.7 + 0.5 * breath) * (1 + reactTop * 1.2);
-        const bottomIntensity = baseIntensity * (0.7 + 0.5 * flow2) * (1 + reactBottom * 1.2);
-        const leftIntensity = baseIntensity * (0.7 + 0.5 * flow3) * (1 + reactLeft * 1.2);
-        const rightIntensity = baseIntensity * (0.7 + 0.5 * flow1) * (1 + reactRight * 1.2);
-
-        // 蓝色 #00DFFF 为主，紫色点缀
-        const blue = '0, 223, 255';
-        const purple = '150, 100, 255';
-
-        // 顶部
-        const topGrad = ctx.createLinearGradient(0, 0, 0, topWidth);
-        topGrad.addColorStop(0, `rgba(${blue}, ${topIntensity * 0.9})`);
-        topGrad.addColorStop(0.4, `rgba(${purple}, ${topIntensity * 0.4})`);
-        topGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-        ctx.fillStyle = topGrad;
-        ctx.fillRect(0, 0, width, topWidth);
-
-        // 底部
-        const bottomGrad = ctx.createLinearGradient(0, height, 0, height - bottomWidth);
-        bottomGrad.addColorStop(0, `rgba(${blue}, ${bottomIntensity * 0.9})`);
-        bottomGrad.addColorStop(0.4, `rgba(${purple}, ${bottomIntensity * 0.4})`);
-        bottomGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-        ctx.fillStyle = bottomGrad;
-        ctx.fillRect(0, height - bottomWidth, width, bottomWidth);
-
-        // 左侧
-        const leftGrad = ctx.createLinearGradient(0, 0, leftWidth, 0);
-        leftGrad.addColorStop(0, `rgba(${blue}, ${leftIntensity * 0.9})`);
-        leftGrad.addColorStop(0.4, `rgba(${purple}, ${leftIntensity * 0.4})`);
-        leftGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-        ctx.fillStyle = leftGrad;
-        ctx.fillRect(0, 0, leftWidth, height);
-
-        // 右侧
-        const rightGrad = ctx.createLinearGradient(width, 0, width - rightWidth, 0);
-        rightGrad.addColorStop(0, `rgba(${blue}, ${rightIntensity * 0.9})`);
-        rightGrad.addColorStop(0.4, `rgba(${purple}, ${rightIntensity * 0.4})`);
-        rightGrad.addColorStop(1, 'rgba(0, 0, 0, 0)');
-        ctx.fillStyle = rightGrad;
-        ctx.fillRect(width - rightWidth, 0, rightWidth, height);
-    }
-
-    init();
-    animate();
-</script>
+  <script src="js/PixelBackground.js?v=20260214-1"></script>
+  <script src="js/App.js?v=20260214-1"></script>
 </body>
 </html>

@@ -1,0 +1,324 @@
+/* 字体与基础重置 */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* 基础重置 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* 核心：视觉层置底 */
+#bg-layer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  background: #1a1a1a;
+}
+
+/* 核心：UI 层，背景半透明并带有模糊效果 */
+.ui-layer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  color: #fff;
+}
+
+/* 修改 Header：移除背景，调整布局 */
+header {
+  height: 48px;
+  background: transparent;
+  backdrop-filter: none;
+  border-bottom: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.header-logo {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  margin-left: 8px;
+}
+
+/* 汉堡菜单与用户头像的图标样式 */
+.icon-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  opacity: 0.8;
+}
+
+.icon-btn.hamburger {
+  width: 22px;
+  height: 22px;
+  gap: 3px;
+}
+
+.icon-btn:hover {
+  opacity: 1;
+}
+
+.hamburger span {
+  width: 20px;
+  height: 2px;
+  background: #fff;
+  border-radius: 2px;
+}
+
+.icon-btn.hamburger span {
+  width: 14px;
+  height: 1.5px;
+}
+
+/* Switch 按钮 44px 高，居中 */
+.header-center {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.switch-btn {
+  height: 48px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  opacity: 0.85;
+}
+
+.switch-btn:hover {
+  opacity: 1;
+}
+
+.switch-btn img {
+  height: 48px;
+  width: auto;
+  object-fit: contain;
+}
+
+.header-right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.user-profile {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #666, #333);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.main-container {
+  display: flex;
+  flex: 1;
+  overflow: hidden;
+}
+
+/* 修改侧边栏：卡片化 */
+.sidebar-card {
+  width: 240px;
+  margin: 0 8px 8px 8px;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* 新建项目按钮 */
+.sidebar-header {
+  padding: 12px 10px 8px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.btn-new-project {
+  width: 100%;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: rgba(148, 94, 255, 0.2);
+  border: 1px solid rgba(148, 94, 255, 0.5);
+  border-radius: 8px;
+  color: #945EFF;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.btn-new-project:hover {
+  background: rgba(148, 94, 255, 0.35);
+  border-color: rgba(148, 94, 255, 0.7);
+}
+
+/* 项目列表项：高度略缩小 */
+.project-list {
+  padding: 8px;
+  overflow-y: auto;
+}
+
+.project-item {
+  height: 56px;
+  margin-bottom: 6px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-radius: 8px;
+  transition: background 0.2s;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
+
+.project-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.project-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.project-info {
+  flex: 1;
+}
+
+.project-name {
+  font-size: 13px;
+  font-weight: 300;
+  color: #eee;
+  margin-bottom: 2px;
+  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.project-meta {
+  font-size: 10px;
+  color: #777;
+  display: flex;
+  gap: 6px;
+}
+
+.content-area {
+  flex: 1;
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+.workspace-hero {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.workspace-hero h1 {
+  font-size: 56px;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.5px;
+  font-family: 'Manrope', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+}
+
+.typewriter {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 6px solid rgba(180, 70, 255, 1);
+  animation: caretBlink 0.9s step-end infinite;
+}
+
+@keyframes caretBlink {
+  from, to { border-right-color: rgba(180, 70, 255, 0); }
+  50% { border-right-color: rgba(180, 70, 255, 1); }
+}
+
+.workspace-input-wrap {
+  width: 100%;
+  max-width: 560px;
+}
+
+.workspace-input {
+  width: 100%;
+  min-height: 52px;
+  padding: 14px 20px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  color: #fff;
+  font-size: 15px;
+  outline: none;
+  transition: background 0.2s, border-color 0.2s;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  caret-color: #b446ff;
+}
+
+.workspace-input::placeholder {
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.workspace-input:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.18);
+}
+
+.workspace-input:focus {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(148, 94, 255, 0.5);
+}
+
+/* 启动画面：先隐藏文案和输入框，再通过类控制渐显 */
+.intro-hidden {
+  opacity: 0;
+  transform: translateY(6px);
+  pointer-events: none;
+}
+
+.intro-fade-in {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
