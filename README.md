@@ -6,4 +6,4 @@
 - **蓝紫色光照**：光标周围青蓝 #00DFFF 光照，带色散效果
 - **边缘发光**：窗口边缘有呼吸般的蓝紫色渐变，并对光标有响应
 
-在线预览：仓库启用 GitHub Pages 后，访问 `https://<你的用户名>.github.io/pixel-gravity-light/`
+在线预览：仓库启用 GitHub Pages 后，访问 `https://yinyucheng0601.github.io/pixel-gravity-light/`
