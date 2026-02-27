@@ -10,6 +10,58 @@ body {
   background: #000;
 }
 
+/* ── 启动态：打字机 loading 屏 ──────────────────────────── */
+
+#intro-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  transition: opacity 0.7s ease;
+}
+
+#intro-text {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  font-size: 60px;
+  font-weight: 400;
+  color: #e2e2e2;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: baseline;
+  user-select: none;
+  /* 文字本身淡淡发光 */
+  text-shadow: 0 0 40px rgba(140, 80, 255, 0.25);
+}
+
+/* 紫色光标，闪烁表达 loading */
+.tw-cursor {
+  color: #b44cff;
+  text-shadow:
+    0 0 6px #b44cff,
+    0 0 18px #8833ff,
+    0 0 38px #6611cc;
+  animation: tw-blink 0.65s step-end infinite;
+  margin-left: 3px;
+}
+
+@keyframes tw-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* IDE shell：初始不可见，等 JS 淡入 */
+#ide-shell {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+
 /* 动态背景 Canvas - 限制在1920×1080区域内 */
 #bg-layer {
   position: fixed;
@@ -96,49 +148,22 @@ body {
   object-fit: contain;
 }
 
-/* 中间编辑列：固定宽度1116px */
-.ide-center {
-  width: 1116px;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  overflow: hidden;
-  min-width: 0;
-}
-
-/* 代码编辑器：宽度1116px，高度803px，图片保持原始比例 */
-.ide-editor {
-  width: 1116px;
-  height: 803px;
-  flex: none;
+/* 主内容区：原图 3208×1988 (2x Retina) → 显示 1604×994
+   用户指定宽 1602px，对应高 = 1602 × (1988/3208) ≈ 993px
+   object-fit: contain 在容器内保持比例，无变形 */
+.ide-content {
+  width: 1602px;
+  flex-shrink: 0;
   overflow: hidden;
 }
 
-.ide-editor img {
-  object-fit: cover;
+.ide-content img {
+  display: block;
   width: 100%;
   height: 100%;
-}
-
-/* Terminal：图片保持原始比例 */
-.ide-terminal {
-  flex: 1;
-  overflow: hidden;
-  min-height: 0;
-}
-
-.ide-terminal img {
   object-fit: contain;
-}
-
-/* 右侧 Chat 面板：固定宽度480px，图片保持原始比例 */
-.ide-chat {
-  width: 480px;
-  flex-shrink: 0;
-}
-
-.ide-chat img {
-  object-fit: contain;
+  object-position: top left;
+  opacity: 0.9;
 }
 
 /* 底部状态栏：SVG 原生 1920×32 */

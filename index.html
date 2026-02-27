@@ -4,59 +4,55 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI IDE - Pixel Gravity</title>
+  <!-- preconnect 加速 Google Fonts，避免 @import 阻塞渲染 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap">
   <link rel="stylesheet" href="css/layout.css">
 </head>
 <body>
+
+  <!-- 背景 canvas：无依赖，最先渲染 -->
   <canvas id="bg-layer"></canvas>
 
-<div class="ide-shell">
+  <!-- 启动态：canvas 启动即显示，图片后台加载，3s 后淡出 -->
+  <div id="intro-screen">
+    <div id="intro-text">
+      <span id="tw-text"></span><span class="tw-cursor">|</span>
+    </div>
+  </div>
 
-    <!-- 顶部菜单栏 -->
+  <!-- IDE UI：初始隐藏，3s 后淡入 -->
+  <div class="ide-shell" id="ide-shell">
+
     <div class="ide-menubar">
       <img src="assets/frame_顶部菜单栏.png" alt="Menu Bar">
     </div>
 
-    <!-- 中间主体区域 -->
     <div class="ide-main">
 
-      <!-- 左侧组合：Nav + Sidebar，无间隙 -->
       <div class="ide-left">
-        <!-- 左侧 Activity Bar / Nav -->
         <div class="ide-nav">
           <img src="assets/frame_left_nav.svg" alt="Activity Bar">
         </div>
-
-        <!-- 左侧项目树 -->
         <div class="ide-sidebar">
           <img src="assets/frame_left_project_tree.png" alt="Project Tree">
         </div>
       </div>
 
-      <!-- 中间编辑区（代码编辑器 + Terminal） -->
-      <div class="ide-center">
-        <div class="ide-editor">
-          <img src="assets/content_middle_up_代码编辑器.png" alt="Code Editor">
-        </div>
-        <div class="ide-terminal">
-          <img src="assets/content_middle_bottom_Terminal.png" alt="Terminal">
-        </div>
-      </div>
-
-      <!-- 右侧 Chat 面板 -->
-      <div class="ide-chat">
-        <img src="assets/content_right chat.png" alt="AI Chat">
+      <div class="ide-content">
+        <img src="assets/content.png" alt="Content">
       </div>
 
     </div>
 
-    <!-- 底部状态栏 -->
     <div class="ide-statusbar">
       <img src="assets/frame_bottom_状态栏.svg" alt="Status Bar">
     </div>
 
   </div>
 
-  <script src="js/PixelBackground.js?v=20260214-1"></script>
-  <script src="js/App.js?v=20260214-1"></script>
+  <script src="js/PixelBackground.js"></script>
+  <script src="js/App.js"></script>
 </body>
 </html>
