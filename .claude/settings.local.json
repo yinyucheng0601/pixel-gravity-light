@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 -c \"\nfrom PIL import Image\nimport os\nassets = ['assets/frame_顶部菜单栏.png', 'assets/frame_left_nav.svg', 'assets/frame_left_project_tree.png', 'assets/content_middle_up_代码编辑器.png', 'assets/content_middle_bottom_Terminal.png', 'assets/content_right chat.png', 'assets/frame_bottom_状态栏.svg']\nfor a in assets:\n    if a.endswith\\('.png'\\):\n        try:\n            img = Image.open\\(a\\)\n            print\\(f'{a}: {img.size}'\\)\n        except:\n            print\\(f'{a}: error'\\)\n    else:\n        print\\(f'{a}: SVG \\(check manually\\)'\\)\n\")",
+      "Bash(for f in assets/*.png)",
+      "Bash(do sips -g pixelWidth -g pixelHeight $f)",
+      "WebSearch",
+      "WebFetch(domain:codepen.io)",
+      "WebFetch(domain:ibelick.com)",
+      "WebFetch(domain:github.com)",
+      "Bash(open /Users/yin/pixel-gravity-light/index.html)",
+      "Bash(open http://localhost:8080)"
+    ]
+  }
+}

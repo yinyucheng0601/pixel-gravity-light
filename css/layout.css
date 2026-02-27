@@ -1,6 +1,3 @@
-/* 字体与基础重置 */
-@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap');
-
 /* 基础重置 */
 * {
   margin: 0;
@@ -10,315 +7,145 @@
 
 body {
   overflow: hidden;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #000;
 }
 
-/* 核心：视觉层置底 */
+/* 动态背景 Canvas - 限制在1920×1080区域内 */
 #bg-layer {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: -1;
-  background: #1a1a1a;
+  width: 1920px;
+  height: 1080px;
+  z-index: 0;
 }
 
-/* 核心：UI 层，背景半透明并带有模糊效果 */
-.ui-layer {
-  position: relative;
+/* IDE 外壳：固定 1920×1080，非响应式 */
+.ide-shell {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 1920px;
+  height: 1080px;
   z-index: 1;
   display: flex;
   flex-direction: column;
-  height: 100vh;
-  color: #fff;
+  gap: 0px;
 }
 
-/* 修改 Header：移除背景，调整布局 */
-header {
-  height: 48px;
-  background: transparent;
-  backdrop-filter: none;
-  border-bottom: none;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0;
-}
-
-.header-left {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex: 1;
-}
-
-.header-logo {
-  width: 32px;
-  height: 32px;
-  object-fit: contain;
-  margin-left: 8px;
-}
-
-/* 汉堡菜单与用户头像的图标样式 */
-.icon-btn {
-  width: 28px;
-  height: 28px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  gap: 4px;
-  cursor: pointer;
-  opacity: 0.8;
-}
-
-.icon-btn.hamburger {
-  width: 22px;
-  height: 22px;
-  gap: 3px;
-}
-
-.icon-btn:hover {
-  opacity: 1;
-}
-
-.hamburger span {
-  width: 20px;
-  height: 2px;
-  background: #fff;
-  border-radius: 2px;
-}
-
-.icon-btn.hamburger span {
-  width: 14px;
-  height: 1.5px;
-}
-
-/* Switch 按钮 44px 高，居中 */
-.header-center {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.switch-btn {
-  height: 48px;
-  padding: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  opacity: 0.85;
-}
-
-.switch-btn:hover {
-  opacity: 1;
-}
-
-.switch-btn img {
-  height: 48px;
-  width: auto;
-  object-fit: contain;
-}
-
-.header-right {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-.user-profile {
-  width: 28px;
-  height: 28px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #666, #333);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.main-container {
-  display: flex;
-  flex: 1;
-  overflow: hidden;
-}
-
-/* 修改侧边栏：卡片化 */
-.sidebar-card {
-  width: 240px;
-  margin: 0 8px 8px 8px;
-  border-radius: 12px;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-}
-
-/* 新建项目按钮 */
-.sidebar-header {
-  padding: 12px 10px 8px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.btn-new-project {
+/* 所有素材图片：保持高宽比，90% 不透明度 */
+.ide-shell img {
+  display: block;
   width: 100%;
-  height: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  background: rgba(148, 94, 255, 0.2);
-  border: 1px solid rgba(148, 94, 255, 0.5);
-  border-radius: 8px;
-  color: #945EFF;
-  font-size: 13px;
-  cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
+  height: 100%;
+  object-fit: contain;
+  object-position: top left;
+  opacity: 0.9;
 }
 
-.btn-new-project:hover {
-  background: rgba(148, 94, 255, 0.35);
-  border-color: rgba(148, 94, 255, 0.7);
+/* 顶部菜单栏
+   原图 7680×160 = 4x Retina → 显示尺寸 1920×40
+   宽高比与容器完全一致，object-fit: contain 完整填充 */
+.ide-menubar {
+  height: 40px;
+  flex-shrink: 0;
+}
+.ide-menubar img {
+  object-position: center;
 }
 
-/* 项目列表项：高度略缩小 */
-.project-list {
-  padding: 8px;
-  overflow-y: auto;
-}
-
-.project-item {
-  height: 56px;
-  margin-bottom: 6px;
-  padding: 0 12px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  border-radius: 8px;
-  transition: background 0.2s;
-  cursor: pointer;
-  border: 1px solid transparent;
-}
-
-.project-item:hover {
-  background: rgba(255, 255, 255, 0.05);
-  border-color: rgba(255, 255, 255, 0.1);
-}
-
-.project-icon {
-  width: 32px;
-  height: 32px;
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 18px;
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-}
-
-.project-info {
+/* 中间主体行：填充剩余高度 996px */
+.ide-main {
   flex: 1;
-}
-
-.project-name {
-  font-size: 13px;
-  font-weight: 300;
-  color: #eee;
-  margin-bottom: 2px;
-  font-family: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-}
-
-.project-meta {
-  font-size: 10px;
-  color: #777;
   display: flex;
   gap: 6px;
+  overflow: hidden;
+  min-height: 0;
 }
 
-.content-area {
-  flex: 1;
-  background: transparent;
+/* 左侧组合：Nav + Sidebar，无间隙 */
+.ide-left {
+  display: flex;
+  gap: 0;
+}
+
+/* Activity Bar / Nav：SVG 原生 40px 宽 */
+.ide-nav {
+  width: 40px;
+  flex-shrink: 0;
+}
+.ide-nav img {
+  object-position: top center;
+}
+
+/* 项目树：260px宽，图片保持原始比例 */
+.ide-sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  margin-top: 0;
+  border-radius: 12px;
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  overflow: hidden;
+}
+
+.ide-sidebar img {
+  margin-left: 0;
+  object-position: top left;
+  object-fit: contain;
+}
+
+/* 中间编辑列：固定宽度1116px */
+.ide-center {
+  width: 1116px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 40px;
-}
-
-.workspace-hero {
-  text-align: center;
-  margin-bottom: 24px;
-}
-
-.workspace-hero h1 {
-  font-size: 56px;
-  font-weight: 300;
-  color: rgba(255, 255, 255, 0.9);
-  letter-spacing: 0.5px;
-  font-family: 'Manrope', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-}
-
-.typewriter {
-  display: inline-block;
-  white-space: nowrap;
+  gap: 6px;
   overflow: hidden;
-  border-right: 6px solid rgba(180, 70, 255, 1);
-  animation: caretBlink 0.9s step-end infinite;
+  min-width: 0;
 }
 
-@keyframes caretBlink {
-  from, to { border-right-color: rgba(180, 70, 255, 0); }
-  50% { border-right-color: rgba(180, 70, 255, 1); }
+/* 代码编辑器：宽度1116px，高度803px，图片保持原始比例 */
+.ide-editor {
+  width: 1116px;
+  height: 803px;
+  flex: none;
+  overflow: hidden;
 }
 
-.workspace-input-wrap {
+.ide-editor img {
+  object-fit: cover;
   width: 100%;
-  max-width: 560px;
+  height: 100%;
 }
 
-.workspace-input {
-  width: 100%;
-  min-height: 52px;
-  padding: 14px 20px;
-  background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 12px;
-  color: #fff;
-  font-size: 15px;
-  outline: none;
-  transition: background 0.2s, border-color 0.2s;
-  backdrop-filter: blur(18px);
-  -webkit-backdrop-filter: blur(18px);
-  caret-color: #b446ff;
+/* Terminal：图片保持原始比例 */
+.ide-terminal {
+  flex: 1;
+  overflow: hidden;
+  min-height: 0;
 }
 
-.workspace-input::placeholder {
-  color: rgba(255, 255, 255, 0.35);
+.ide-terminal img {
+  object-fit: contain;
 }
 
-.workspace-input:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(255, 255, 255, 0.18);
+/* 右侧 Chat 面板：固定宽度480px，图片保持原始比例 */
+.ide-chat {
+  width: 480px;
+  flex-shrink: 0;
 }
 
-.workspace-input:focus {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: rgba(148, 94, 255, 0.5);
+.ide-chat img {
+  object-fit: contain;
 }
 
-/* 启动画面：先隐藏文案和输入框，再通过类控制渐显 */
-.intro-hidden {
-  opacity: 0;
-  transform: translateY(6px);
-  pointer-events: none;
+/* 底部状态栏：SVG 原生 1920×32 */
+.ide-statusbar {
+  height: 32px;
+  flex-shrink: 0;
 }
-
-.intro-fade-in {
-  opacity: 1;
-  transform: translateY(0);
-  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+.ide-statusbar img {
+  object-position: center;
 }

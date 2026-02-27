@@ -37,10 +37,10 @@ class PixelBackground {
     if (!this.ctx) throw new Error('PixelBackground: 需要有效的 canvas 元素');
 
     // 点阵间距（越大越稀疏）
-    this.spacing = options.spacing ?? 28;
+    this.spacing = options.spacing ?? 20;
     this.lightRadius = options.lightRadius ?? 380;
     // 光标引力强度（越小扭曲越弱）
-    this.gravityStrength = options.gravityStrength ?? 0.25;
+    this.gravityStrength = options.gravityStrength ?? 0.15;
     this.defaultDotAlpha = options.defaultDotAlpha ?? 0.05;
 
     this.particles = [];
@@ -64,14 +64,14 @@ class PixelBackground {
       blue: _parseColor(options?.colors?.blue ?? ds.colorBlue, [70, 130, 255])
     };
 
-    // 启动涟漪效果配置
+    // 启动涟漪效果配置 - 固定在1920×1080画布中心
     this.introRipple = {
       active: true,
-      centerX: window.innerWidth / 2,
-      centerY: window.innerHeight / 2,
+      centerX: 960,  // 1920 / 2
+      centerY: 540,  // 1080 / 2
       startTime: 1,
-      waveCount: 3,          // 扩散三次
-      period: 6.0,           // 每次大约 3 秒
+      waveCount: 2,          // 扩散三次
+      period: 4.0,           // 每次大约 3 秒
       thickness: 80,         // 波纹带宽度
       strength: 30,          // 对像素点的位移强度
       brightnessBoost: 1   // 对亮度的增强倍数
@@ -109,12 +109,14 @@ class PixelBackground {
         this.introRipple.active = false;
       }
     });
-    window.addEventListener('resize', () => this.init());
+    // 移除resize重新初始化，保持固定1920×1080尺寸避免变形
+    // window.addEventListener('resize', () => this.init());
   }
 
   init() {
-    this.width = this.canvas.width = window.innerWidth;
-    this.height = this.canvas.height = window.innerHeight;
+    // 使用CSS中定义的尺寸1920×1080，保持比例正确
+    this.width = this.canvas.width = 1920;
+    this.height = this.canvas.height = 1080;
     this.particles = [];
 
     for (let y = 0; y < this.height; y += this.spacing) {

@@ -3,79 +3,57 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pixel Gravity & Light Effect</title>
+  <title>AI IDE - Pixel Gravity</title>
   <link rel="stylesheet" href="css/layout.css">
 </head>
 <body>
   <canvas id="bg-layer"></canvas>
 
-  <div class="ui-layer">
-    <header>
-      <div class="header-left">
-        <img src="assets/logo.png" alt="Logo" class="header-logo">
-        <div class="icon-btn hamburger">
-          <span></span><span></span><span></span>
-        </div>
-        <!-- Switch 紧跟在菜单 icon 后面，靠左排列 -->
-        <button class="switch-btn"><img src="assets/switch.png" alt="Switch" /></button>
-      </div>
-      <div class="header-center"></div>
-      <div class="header-right">
-        <div class="user-profile"></div>
-      </div>
-    </header>
+<div class="ide-shell">
 
-    <div class="main-container">
-      <aside class="sidebar-card">
-        <div class="sidebar-header">
-          <button class="btn-new-project">+ 新建项目</button>
-        </div>
-        <div class="project-list">
-          <div class="project-item">
-            <div class="project-icon"></div>
-            <div class="project-info">
-              <div class="project-name">Neural-Flow-Backend</div>
-              <div class="project-meta"><span>Python</span><span>•</span><span>2m ago</span></div>
-            </div>
-          </div>
-
-          <div class="project-item">
-            <div class="project-icon"></div>
-            <div class="project-info">
-              <div class="project-name">GPT-Edge-Optimizer</div>
-              <div class="project-meta"><span>Rust</span><span>•</span><span>1h ago</span></div>
-            </div>
-          </div>
-
-          <div class="project-item">
-            <div class="project-icon"></div>
-            <div class="project-info">
-              <div class="project-name">Diffusion-UI-Core</div>
-              <div class="project-meta"><span>TypeScript</span><span>•</span><span>Yesterday</span></div>
-            </div>
-          </div>
-
-          <div class="project-item">
-            <div class="project-icon"></div>
-            <div class="project-info">
-              <div class="project-name">Auto-Doc-Agent</div>
-              <div class="project-meta"><span>Go</span><span>•</span><span>Feb 12</span></div>
-            </div>
-          </div>
-        </div>
-      </aside>
-
-      <main class="content-area">
-        <div id="intro-container" class="intro-box">
-          <div class="workspace-hero intro-hidden">
-            <h1>Code Your Dream</h1>
-          </div>
-          <div class="workspace-input-wrap search-wrapper intro-hidden">
-            <input type="text" class="workspace-input" placeholder="What's on your mind now?" />
-          </div>
-        </div>
-      </main>
+    <!-- 顶部菜单栏 -->
+    <div class="ide-menubar">
+      <img src="assets/frame_顶部菜单栏.png" alt="Menu Bar">
     </div>
+
+    <!-- 中间主体区域 -->
+    <div class="ide-main">
+
+      <!-- 左侧组合：Nav + Sidebar，无间隙 -->
+      <div class="ide-left">
+        <!-- 左侧 Activity Bar / Nav -->
+        <div class="ide-nav">
+          <img src="assets/frame_left_nav.svg" alt="Activity Bar">
+        </div>
+
+        <!-- 左侧项目树 -->
+        <div class="ide-sidebar">
+          <img src="assets/frame_left_project_tree.png" alt="Project Tree">
+        </div>
+      </div>
+
+      <!-- 中间编辑区（代码编辑器 + Terminal） -->
+      <div class="ide-center">
+        <div class="ide-editor">
+          <img src="assets/content_middle_up_代码编辑器.png" alt="Code Editor">
+        </div>
+        <div class="ide-terminal">
+          <img src="assets/content_middle_bottom_Terminal.png" alt="Terminal">
+        </div>
+      </div>
+
+      <!-- 右侧 Chat 面板 -->
+      <div class="ide-chat">
+        <img src="assets/content_right chat.png" alt="AI Chat">
+      </div>
+
+    </div>
+
+    <!-- 底部状态栏 -->
+    <div class="ide-statusbar">
+      <img src="assets/frame_bottom_状态栏.svg" alt="Status Bar">
+    </div>
+
   </div>
 
   <script src="js/PixelBackground.js?v=20260214-1"></script>
